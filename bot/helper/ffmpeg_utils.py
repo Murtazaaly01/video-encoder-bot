@@ -15,10 +15,10 @@ def get_codec(filepath, channel='v:0'):
 
 def encode(filepath):
     basefilepath, extension = os.path.splitext(filepath)
-    output_filepath = basefilepath + '.HEVC' + '.mp4'
+    output_filepath = f'{basefilepath}.HEVC.mp4'
     assert(output_filepath != filepath)
     if os.path.isfile(output_filepath):
-        print('Skipping "{}": file already exists'.format(output_filepath))
+        print(f'Skipping "{output_filepath}": file already exists')
         return None
     print(filepath)
     # Get the video channel codec
@@ -50,7 +50,7 @@ def encode(filepath):
     return output_filepath
 
 def get_thumbnail(in_filename, path, ttl):
-    out_filename = os.path.join(path, str(time.time()) + ".jpg")
+    out_filename = os.path.join(path, f"{str(time.time())}.jpg")
     open(out_filename, 'a').close()
     try:
         (
@@ -66,10 +66,7 @@ def get_thumbnail(in_filename, path, ttl):
 
 def get_duration(filepath):
     metadata = extractMetadata(createParser(filepath))
-    if metadata.has("duration"):
-      return metadata.get('duration').seconds
-    else:
-      return 0
+    return metadata.get('duration').seconds if metadata.has("duration") else 0
 
 def get_width_height(filepath):
     metadata = extractMetadata(createParser(filepath))
