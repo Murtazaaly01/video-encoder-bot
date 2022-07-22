@@ -24,8 +24,7 @@ def help_message(app, message):
 
 @app.on_message(filters.user(sudo_users) & filters.incoming & (filters.video | filters.document))
 def encode_video(app, message):
-    if message.document:
-      if not message.document.mime_type in video_mimetype:
+    if message.document and message.document.mime_type not in video_mimetype:
         message.reply_text("```Invalid Video !\nMake sure its a valid video file.```", quote=True)
         return
     message.reply_text("```Added to queue...```", quote=True)
